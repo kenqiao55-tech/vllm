@@ -1,25 +1,28 @@
-stages:
-  - first
-  - second
+name: stage-order
 
-job_a:
-  stage: first
-  image: alpine:3.20
-  script:
-    - echo "A start"
-    - sleep 15
-    - echo "A end"
+on:
+  push:
+  workflow_dispatch:
 
-job_b:
-  stage: first
-  image: alpine:3.20
-  script:
-    - echo "B start"
-    - sleep 5
-    - echo "B end"
+jobs:
+  job_a:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "A start"
+          sleep 15
+          echo "A end"
 
-job_c:
-  stage: second
-  image: alpine:3.20
-  script:
-    - echo "C start"
+  job_b:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "B start"
+          sleep 5
+          echo "B end"
+
+  job_c:
+    runs-on: ubuntu-latest
+    needs: [job_a, job_b]
+    steps:
+      - run: echo "C start"
