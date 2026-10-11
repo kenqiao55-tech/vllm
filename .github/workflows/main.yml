@@ -1,0 +1,25 @@
+stages:
+  - first
+  - second
+
+job_a:
+  stage: first
+  image: alpine:3.20
+  script:
+    - echo "A start"
+    - sleep 15
+    - echo "A end"
+
+job_b:
+  stage: first
+  image: alpine:3.20
+  script:
+    - echo "B start"
+    - sleep 5
+    - echo "B end"
+
+job_c:
+  stage: second
+  image: alpine:3.20
+  script:
+    - echo "C start"
